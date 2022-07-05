@@ -135,13 +135,73 @@ Agility rapidly develop test and launch apps
 
 
 ### Types of Cloud Computing
-IaaS 
-PaaS
-SaaS
+* IaaS 
+    Provee componetes basicos para cludTI en la nube
+    networking computeres data storage
+    Hghest level of flex
+* PaaS
+    Removes la necesidad de adminitras la infraestructura subaciente enfocado en el despliegue de apps
+* SaaS
+    Cproducto ejecutado y manejado por el proveedor
 
-[![Types of Cloud Computing](/AWS/assets/IaaS-PaaS.png "Types of Cloud Computing")
+
+On-premises propias instalaciones
+
+![Types of Cloud Computing](/AWS/assets/IaaS-PaaS.png "Types of Cloud Computing")
 
 
+### Ejemplos de tipos de Cloud computing
+
+* IaaS
+    EC2, Azure,Digital Ocean 
+* PaaS
+    Elastic Beanstalk, Heroku Google App Engie
+* SaaS
+    Rekoginition, Gmail, Zoom
+
+### Pricing of the Cloud
+
+AWS has 3 pricing fundamentals fllowing the pay-as-you go pricing model
+
+* Compute : pay for compute time
+* Storage: Pay for data stored in the Cloud
+* Data transfer OUT of the Cloud: data in is free
+ 
+### AWs cloud history
+2002 intenally launched
+
+47% of the market in 2019
+9 years leader
++1.000.000 active users
+
+### AWS Cloud Use Cases
+AWS permite crear sophisticated scalable applications applicable a dicersas industrias
+
+### AWS Global Infraestructure 
+
+* **AWS Regions**:
+AWS tiene el concepto de Región, que es una ubicación física en todo el mundo donde agrupamos los centros de datos. Llamamos a cada grupo de centros de datos lógicos una zona de disponibilidad. Cada región de AWS consta de zonas de disponibilidad múltiples, aisladas y separadas físicamente dentro de un área geográfica.
+Cluster of data centers, los servicios estan focalizados en regiones ,Names can be us-east-1, eu-west-3 
+
+Para elegir una region se debe toamr en cuenta Compliance with data governance, proximity, available services with a Region, Pricing pricing varies region to region
+
+
+* **Abailability Zones**
+Una zona de disponibilidad (AZ) es uno o más centros de datos discretos con energía, redes y conectividad redundantes en una región de AWS. Los AZ brindan a los clientes la capacidad de operar aplicaciones y bases de datos de producción que tienen mayor disponibilidad, tolerancia a fallas y escalabilidad de lo que sería posible desde un solo centro de datos. Todas las zonas de disponibilidad en una región de AWS están interconectadas con redes de baja latencia y gran ancho de banda, a través de fibra metropolitana dedicada totalmente redundante que proporciona redes de alto rendimiento y baja latencia entre las zonas de disponibilidad. Todo el tráfico entre AZ está encriptado. El rendimiento de la red es suficiente para lograr la replicación síncrona entre zonas de disponibilidad. Las zonas de disponibilidad facilitan la creación de particiones para aplicaciones de alta disponibilidad
+Usually 3 min 2 max 6 , each AZ is one or more discrete data center with redundant power networking and connectivity
+Isolated for disaaster
+* **Local Zones**
+Las zonas locales de AWS colocan la computación, el almacenamiento, la base de datos y otros servicios selectos de AWS más cerca de los usuarios finales. Con AWS Local Zones, puede ejecutar fácilmente aplicaciones muy exigentes que requieren latencias de milisegundos de un solo dígito para sus usuarios finales, como creación de contenido multimedia y de entretenimiento, juegos en tiempo real, simulaciones de depósitos, automatización de diseño electrónico y aprendizaje automático.
+
+* **AWS Wavelength**
+AWS Wavelength permite a los desarrolladores crear aplicaciones que brindan latencias de milisegundos de un solo dígito a dispositivos móviles y usuarios finales. Los desarrolladores de AWS pueden implementar sus aplicaciones en Wavelength Zones, implementaciones de infraestructura de AWS que integran los servicios de computación y almacenamiento de AWS dentro de los centros de datos de los proveedores de telecomunicaciones en el borde de las redes 5G y acceder sin problemas a la variedad de servicios de AWS en la región. Esto permite a los desarrolladores ofrecer aplicaciones que requieren latencias de milisegundos de un solo dígito, como juegos y transmisión de video en vivo, inferencia de aprendizaje automático en el borde y realidad aumentada y virtual (AR/VR). AWS Wavelength lleva los servicios de AWS al borde de la red 5G, minimizando la latencia para conectarse a una aplicación desde un dispositivo móvil
+
+* **AWS Outposts**
+bring native AWS services, infrastructure, and operating models to virtually any data center, co-location space, or on-premises facility. You can use the same AWS APIs, tools, and infrastructure across on-premises and the AWS cloud to deliver a truly consistent hybrid experience
+
+
+
+-------Page 35----
 [![Product Name Screen Shot][product-screenshot]](https://example.com)
 
 There are many great README templates available on GitHub; however, I didn't find one that really suited my needs so I created this enhanced one. I want to create a README template so amazing that it'll be the last one you ever need -- I think this is it.
@@ -277,7 +337,7 @@ Project Link: [https://github.com/your_username/repo_name](https://github.com/yo
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 
-
+123
 <!-- ACKNOWLEDGMENTS -->
 ## Acknowledgments
 
