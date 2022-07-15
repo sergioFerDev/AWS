@@ -186,7 +186,7 @@ Cluster of data centers, los servicios estan focalizados en regiones ,Names can 
 Para elegir una region se debe toamr en cuenta Compliance with data governance, proximity, available services with a Region, Pricing pricing varies region to region
 
 
-* **Abailability Zones**
+* **Availability Zones**
 Una zona de disponibilidad (AZ) es uno o más centros de datos discretos con energía, redes y conectividad redundantes en una región de AWS. Los AZ brindan a los clientes la capacidad de operar aplicaciones y bases de datos de producción que tienen mayor disponibilidad, tolerancia a fallas y escalabilidad de lo que sería posible desde un solo centro de datos. Todas las zonas de disponibilidad en una región de AWS están interconectadas con redes de baja latencia y gran ancho de banda, a través de fibra metropolitana dedicada totalmente redundante que proporciona redes de alto rendimiento y baja latencia entre las zonas de disponibilidad. Todo el tráfico entre AZ está encriptado. El rendimiento de la red es suficiente para lograr la replicación síncrona entre zonas de disponibilidad. Las zonas de disponibilidad facilitan la creación de particiones para aplicaciones de alta disponibilidad
 Usually 3 min 2 max 6 , each AZ is one or more discrete data center with redundant power networking and connectivity
 Isolated for disaaster
@@ -199,6 +199,104 @@ AWS Wavelength permite a los desarrolladores crear aplicaciones que brindan late
 * **AWS Outposts**
 bring native AWS services, infrastructure, and operating models to virtually any data center, co-location space, or on-premises facility. You can use the same AWS APIs, tools, and infrastructure across on-premises and the AWS cloud to deliver a truly consistent hybrid experience
 
-
-
 -------Page 35----
+
+### How to choose AWS Region?
+
+* Compliance with data governance and legal requirements
+* Proximity to customers reduce latency
+* Available services with a regio new services accordin region
+* Pricing priceing varies region
+
+
+### shared responsibility Model diagram
+
+Customer Responsability for the security in the Cloud
+AWS for the security of the cloud
+
+### AWS acceptable use poicy
+
+* No illegal harmful 
+* No security violations
+* No network abuse
+* No e-mail or other message abuse
+
+
+## IAM 
+
+* IAM idendtiyy and access management, Global service
+* Root  account created by default shuldn't used or shared
+* User are peopol within your organization and can be grouped
+* Groups only contain users no other groups
+
+Users pueden pertenecer o no a un grupo o a multiples
+
+### IAM permissions
+
+* Users or groups can be assigned JSON documents called policies
+* Policies define permissions of the users
+* AWS apply least privilege principle , dont give more permissions than a user need
+
+
+![IAM POlicies Structure](/AWS/assets/IAM_policies.png "IAM POlicies Structure")
+
+
+* Strong passwords higher security for your account 
+* in aws you can setup a password policy(length, include char, re-use, rquire change )
+
+### Multi Factor Authentication MFA
+
+protecto you account Root
+MFA password +security device
+DEvices:
+* MFA virtual device (google auth , authy)
+* Universal 2nd Factor (U2F) Securityy key (YubiKey)
+* Hardware key gemalto
+* hardware for AWS GovCloud SurePassID
+
+### How can access users?
+
+Access keys are generated through AWS Console, user can manage dont share , access key ID username Secret access key password
+
+- CLI AWS command line interface -access keys
+
+a tool enables you to interact with AWS services using commands in you command-line shell, direct access to the public APIs
+Open source
+Alternantive to using Console
+
+- SDK Software Developer Kit -access keys
+lenguage-specific APIs set of libreries, access AWS service programm, embedded with your app(JS, py,go)
+CLI is built on aws sdk for py
+
+- Console pass+MFA
+
+### IAM Roles for Services
+
+Some AWS service will need to perform actions on your behalf(en mi nombre), to do so, we'll assign permision to AWS services with IAM Roles Common roles(EC2 instance rroles;lambda, Cloudformation)
+
+### Tools
+ * credentials Report account-level Report that lists all accounts and users status
+
+ * access advisor user-level Access advisor shows the service permissions and when those services were last accessed
+
+ ### best Practices
+
+ * Don't use the root account except for AWS account setup
+ * One physical user = One AWS user
+ * Assign users to groups and permission to croups
+ * Create a strong pass policy
+ * Use and enforce MFA
+ * Create and Roles for giving permissions
+ * Use Access keys for prog access (CLI/SDK)
+ * Audit permissions of your account wiht IAM cred Report
+ * Neverr share IAM users and access keys
+
+### shared responsavility
+
+* AWS infra, config and vulnerability, compliance
+* YOU User, groups,MFA, rotate allf your keys, use IAM tools to apply permisions, analyse access patterns 
+
+## AMAZON EC2 
+
+
+--P57---
