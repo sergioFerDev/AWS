@@ -84,7 +84,7 @@
 
 Es on-demand delivery de compute power, database storage, apps and others
 pay as you go procing, provisionando exactamente el tipo correcto y el tamano adecuado de recursos que necesitas.
-Se peude acceder a muchos servicios que se necesita al isntante
+Se peude acceder a muchos servicios que se necesita al instante
 Manera sensible de acceder a servidores, almacenamiento, database y un set de aplicaicones y servicios
 
 AWS tiene y maniene una red conectada de hardware para todo tipo de aplcaciones, mientras nosotros provisionamos y utilziamos lo que se necesita a traves de la web app.
@@ -99,7 +99,7 @@ Private Cloud
 * Securidad para apps sensitivas
 * cumple necesidades especificas
 
-Public Ckiyd
+Public Cloud
 * cloud resources owned y operado por a 3rd party cloud service provider y entregado a travez de interner
 * Six adventages
 
@@ -126,12 +126,12 @@ Hybrid Cloud
 Go global in minutes (leverage-aprovecha-the AWS global infra)
 
 ### Problems Solved by the cloud
-Flexibility change the resource when you needed
-Cost*effectiveness pay as you go
-Scalability accomodate larger loads adding nodes or increase HW
-Elasticiy ability to scale out (horitzontal )and sacle in (vertical )when needed
-High availabiliy and fault-tolerance build acrross data center
-Agility rapidly develop test and launch apps
+* Flexibility change the resource when you needed
+* Cost*effectiveness pay as you go
+* Scalability accomodate larger loads adding nodes or increase HW
+* Elasticiy ability to scale out (horitzontal )and sacle in (vertical )when needed
+* High availabiliy and fault-tolerance build acrross data center
+* Agility rapidly develop test and launch apps
 
 
 ### Types of Cloud Computing
@@ -296,7 +296,210 @@ Some AWS service will need to perform actions on your behalf(en mi nombre), to d
 * AWS infra, config and vulnerability, compliance
 * YOU User, groups,MFA, rotate allf your keys, use IAM tools to apply permisions, analyse access patterns 
 
+--P57---
 ## AMAZON EC2 
 
+one of the mos popular, Elastic compute cloud IaaS
+* Renting virtual machines EC@
+* Storing data EBS
+* Distribuiting load ELB
+* Scaling the service auto-scaling group ASG
+* EC@ is fundamental to undestand how cloud works
+ 
+ ### Options
+ * Operating System OS, CPU,RAM, 
+ * Storage SPACe (-networ attached EBS EFS -hardware EC2 isntance store)
+* Network card(speed of the card)
+* Firewall rules(security group)
+* Bootstrap script
 
---P57---
+* Its possible to boot our intance using a EC2 userd data script (lunch commands when machine start) only run one time when starts
+* Used to automate tasks as update isntall softwaare download file
+* Runs with the root user
+
+### EC2 Instances Types Overview
+Instances can be optimased for diferente use cases
+AWS has this convention:
+
+M5.2xlarge
+
+m:instance class
+5:generation
+2xlarge: size within the insance class
+
+* T (T2,t3,t4g,m5,m5a,m4) gernal pupose EC2 instance balance in compute memory and networking
+* C (c6g,c5,c5a)computed Optimzed used for compute-intensive tasks that require hig preformace processos
+* R (r6g,r5,r5n,x1,x1e)Memory Optimized fast performance for workloads that process large data sets in memory (hig perfomance for realtional no relational databeses optimez for by)
+* I I3 D2 D3 Storage Optimized great for storage intensive task (high freq online transaction, cache for in-memory databases data warehousing)
+
+### Security groups
+
+Sec groups are the fundamental of network security in AWS, control how traffic is allowin into our EC2 instance, only contain allow rules, and can reference by IP or by security group.
+Acting as a firewall on EC@ instances , regulate Access ports, authorised Ip ranges, control of inbound net and outbound
+
+* Security groups can be attached to mulple insances, locked down to a region/
+* Lives putside the EC2 intances, iof is blocked EC2 dont see it
+* Good to maintaina separate SSH group to access
+* If your app is not accessible (time out)its a sec group issue
+* Connection refused its a app error 
+* All inbound blocked by default
+* All outbound authorised by default
+
+Ports to remember SSH(secure shell) 22 FTS 21 SFTP (upload using secure ftp)22 HTTP 80 HTTPS 443 RDP remote desktop3389 
+
+
+EC2 instance connect can be used to connect to EC2 , no need key file, port 22 is open amazon linux 2 only allow
+
+### EC2 Purchasing Options
+
+On Demand Instances
+
+Pagas por lo que usas, Highest cost but no upfront payment
+no long-term commitment sin compromiso a largo plazo
+recomendado para short term y cargas interrumpidas
+
+Reserved Instances
+
+* Reserved specifi instance attibutes for one time
+* 72% discount compared on demand
+* time reservation period 1 year+ 3year+++
+* Payment options no upfront + partial upfront ++ all upfront +++
+* Scope regional or Zonal, recommed seatdy state apps thik database
+* Convertible reserved isntance
+
+Saving Plans
+
+* based on long term usage, commit to a certain type of usage $10 hour for 1 or 3 years
+* billed on demand
+* locked to a specific isntance family & region
+* Flexible acrooss size OS tenancy
+
+Spot instances
+
+* Can have 90% discount compared on demand
+* Intances that you can lose at any point of time
+* Most cost efficient insances
+* Useful for workloads that are reslite to failues(batch joves ,data analysis, image processing, workloads with flexible time)
+* no for critical jobs or databases
+
+EC2 dedicated Hosts
+
+* physical server fully dedicated for your use
+* allows you address compliance req and use your existing server bound sof licenses
+* Purchase on-demand reseved
+* Most expensive
+* Useful for soft that have complicated licensing model or companies with strong regulatory 
+
+EC2 dedicated instances
+
+* instances run on hardware dedicated
+* may share hardware wit other instances
+* no control over instances placement(puede moverse de hardware cuando se detiene o continua)
+
+EC2 Capacity Reservations
+
+* Reserved On-demand isnances capacity in a specific AZ for any duration
+* Sin contrato, sin descuentos, 
+* Se tiene una capacidad reservada, no importa si no se usa se cobrara, se recomienda combinar con otros planes
+
+
+Which purchasing?
+* On demand:entrar y salir cuando quieras del resort pagando fuull
+* Reserved: si planeamos estar por buen tiempo, buen descuento
+* Saving plan: paga a cierto tipo de cantidad por hora y quedate en cualqueir tipo de room (se tiene planeado gastar una cantidad por mes)
+* Spot instances: el hotel permite usar las camas vacias , puedes ser botado en cualqueir momento
+* Dedicated hosts we book a entire building
+* Capacity reservations book a room for a period with full price even you don stay
+
+
+## Shared resp
+
+* AWS infra, isolation , replacing faulty hardware, compliance validation
+* ME security groups ,OS patches and updates,sof installed,IAM roles and user acces, data security
+
+---92---
+
+## EC2 Instance Storage Section
+
+### EBS
+ Elastik block Store volume is a network drive you can attach to your instances
+ Allows persist data, one per instance at time, bound to specifiz AZ (like a network usb stick)
+
+Its a network drive (no phisical drive), uses network to communicate he isnance ,+ latency, 
+ HAve provisioned capacity GBs 
+
+ * Delete on termination attribute
+ when EC2 instance terminates EBS volume is deleted (controle by AWS console)
+ Preserve root volume when instance terminated
+
+ ### EBS snapshot
+
+ Backup of EBS at a point in time
+ not necessary buit recommended
+ can copy acroos the regions
+
+ EBS snapshot archive - move to an archive 75% more cheaper
+ Takes 24-72 hours for restoring
+ Recicly BIN for EBS-recover after accidental deletion (need to specify the amount of time)
+
+ ### AMI
+
+ Amazon Machine Image (customaitazion of EC2 isntance) add your software config operating system monitoring faster boot
+
+ built for a specific region(can be copied across the regions)
+ You can lunc EC@ isntaces from 
+
+ Public AMI, OWN AMI, AWS marketplace AMI
+
+ To create you need to start a EC@ instance and customize it, stop instance , build an AMI, lunch instances from oher AMIs
+
+can not used for add your own IP addresses
+### EC2 image builer
+
+Used to autmate the creation of virtual machiner or container images
+Automate the creation, maitain validate and test EC2 AMIs
+can be scheduled
+free services
+
+### EC2 Instance Store
+
+EBS are network drives withh limited performance, if you need hig performance need EC2 instance Store
+
+Better i/o performace
+Instance Store lose their storage if is stopped
+Good for buffer/cache/scratch data/temporary content
+risk to loss data
+Backups and replication are your resp
+
+IOPS input output peer second
+
+### EFS Elastic File System
+
+managed network file system can be mounten on 100 EC2
+works with linux EC2 instances in multi AZ
+High available scalable expensive ,pay peer use, no capacity planning
+CAn be shared accross AZ 
+
+EFS IA infrecuent access is a cost optimzed for files not accessed every day.92 lower cost compared con standar
+EFS will automatically move you file to EFS IA based on the last time they were accessed
+Enable with a lifecycle policy(ex move files not used after 60 days)
+
+### Shared respon for EC2 storage
+
+AWS:infraestrucute, replciation for data for EBS volumes & EFs, replace fault hardware, ensure their employes can not acces your data.
+
+YOU:Setting backup/snapshot, data encryption, responsability on any data on drives, undestan the risk of using EC2 instance store
+
+
+### FSX overview
+
+launch 3rd pary high performance file system on AWS
+Fully managed service
+(for lustre, windows file server, NEtAPP ONTAd)if you dont want to use S3 or EFS 
+* Windows fully managed , highly reliable and scalable windows native shared FS, build on Windows FS
+* Lustre: fully mange, hig performace scalable file storage for HIGH PERFORMANCE COMPUTING, name from linux and cluster, used for ML, analytics video processing,sacles to 100s GB millon of IPs
+
+voc Tied atado
+
+
+--page 112--
