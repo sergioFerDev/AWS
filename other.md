@@ -503,3 +503,243 @@ voc Tied atado
 
 
 --page 112--
+
+
+## Elastic Loaad Balancing & auto Scaling GRoups Section
+
+Scalability means how can handle greater loads by adaptyng 2 kinds vertical and horizontal.
+Is linked but different to High Availability
+
+* Vertical
+Increse size of the insance (increase hardware) like t2.micro to t2 large common used for non distributed systems like a DB, you have a hardward limit
+ from t2.nano 0.5 G of RAM 1 CPU to u-l 2tb l.metal 12.3 TB of RAM and 448 vCPUs
+
+* Horizontal
+Increse number of instances, implies distributed systems, very common for web apps, easy to to thanks the cloud
+Use Auto Scaling group and load balancer
+
+* High Availability
+
+usually goes hand with horizontal saclaing, means running your app in at least 2 AZs, goal is survive a data center loss.
+Auto Scaling group multi AZ and LB multi AZ
+
+
+### Scalability vs Elasticity (vs Agility)
+
+* Scalability ability to acommodate a larger load by making the hardware stronger(scale up) or by adding nodes (scale out)
+
+* Elasicity need scalability and means there will be some auto-scaling  so that the systemm can scale based on the load, this is cloud friendly and optimize costs pay per use
+
+* Agility new IT reouscer are only a click away which means that reduce the time to make those resoucers availables from wweks to just minutes.
+
+
+### Load Balancing
+
+* Load balancers are servers that foward internet traffic to multuple servers EC2 instances downstrem.
+* Spread load across multiple donstream isntances (distribuir-spread downstream-postoreiores )
+* Exponse a single point of acces DNS to your app, handle failures of downstream instances, do regular health cehcks to your instances.
+* Provide SSL termination for your websites, high availability across zones.
+
+### why use a elastic load blanacer (ELB)
+
+ELB is a managed load balancer and AWS guarantess that it will be working, take care of upgrades maintance and HiAbai, and provides only few config(knobs perillas)It cost less to setup your own LB but it will be a lot more effort on your end maintance and integrations
+
+3 kind of LB offed by AWS
+
+* Application load Balancer (HTTP and HTTPs only)-layer 7
+* Network load Balancer (allow for TCP)-layer 4 low latency
+* Classic load balancer(slowly retiring) -layer4-7 
+* Gateway load balancer cuando necesite implementar y administrar una flota de dispositivos virtuales de terceros compatibles con GENEVE. Estos dispositivos le permiten mejorar la seguridad, el cumplimiento y los controles de políticas.
+
+
+### ASG auto scaling group
+
+load on your web change, ASG incharge to Scale out and scale in +- EC2 instances , ensure max and min machine running and automatically register to a load balancer, replace unhealty instances.
+
+Cost saving , only run at an optimal capacity
+
+Strategies
+* Manual update the size manual of an ASG
+* Dynamic Respond to changing demand
+    * Simple/step scaling (when cpu>70 add 1)
+    * Target TRacking Scaling(average CPU 40%)
+    * Scheduled Scaling -anticipate a scaling based on known usage patterns incres one fridays
+* Predictive Scaling-uses machine learning to predict future traffic, automatically provisions the right number of EC2 in advance(useful when your load has predicatable time-based patterns)
+
+---PG 129--
+
+## S3
+
+Amazon  S3 is one of the most imporat (advertised-anunciado) infinitely scaling storage, many webs and AWS services uses AWS.
+
+* S3 Use cases
+
+Backup and storage, Disaster recovery,Archive, hybrid storage, application hosting, media hosting, dta lakes and big data analytics, software delivery static website
+
+* Buckets
+
+S3 allow to storage objcts in buckets(directories), these buckets must have a globaly unique name, across all regions, buckets defined at region level,buckets created in a region,naming no Uppercase, no underscore, 3-63 charcters,nota an ip, must start with lowercase or number
+
+
+* Objects
+
+Objects(files) have a key
+key is the full path se://my-bucket/my_file.txt
+prexis+object name, there's no concept of directories within buckets althought UI will trick you
+Just keys with very long names that contain slashes
+Max object size is 5TB more than 5GB must use multi-part upload
+Metada list of text key
+Keys Unicode key value pair
+Version ID if versioning is enabled
+
+* Security 
+
+User Based IAM policies which API calls should be allowed for a specific user from IAM
+Resource Based
+    Bucket Policies bucket wide
+    Object Access Control List ACL
+    Bucket Access Control List ACL 
+Encryption encrypt bojects using encryption keys
+
+* S3 bucket plicies 
+
+JSon based (similar to IAM) effect allow deny, princial , the accout or user
+use S3 bucket policy to grant public access to the bucket, force objects to be encrypted, grant access to another account
+
+Block public access to prevent data leaks, if your bucket should nevver be pucblic leve these on , can be set at the account level
+
+* S3 websites
+
+S3 can host static websites and have them accessible on the www, Url wil be < bucket name>.s3-website-< AWS -region >.amazonaws.com if you get 403 check bucket policy
+
+* S3 versioning
+
+you can version your files in S#, its enabled at bucket level, protect against unintended deletes and easy roll back to previous version
+If version activated previous files will have version "null"
+If i deactivated version previous version files daes not delete
+
+* S3 access logs
+
+if you need audit pupose you can log all access to S3 bucket, any request authorized or not will be loger into another s3 bucket and that data can be analyzed using data analysis tools
+Very helpful to come down(llegar) to the root cause of an issue
+
+* Replication CRR and SRR
+
+Must enable versioning in source and destination, CRR cross region replication, SRR same region replication, buckets cann be in different accounts, copyng is asynchronous, must give IAM permission to S3
+
+CRR lower latency access, replication
+SRR log agregation, live replication between production and test ccounts
+
+* Durability and Avilability
+
+Durability hig 99.99 11 9's of objects across multiple AZ
+same for all stoage classes
+
+Avaialbility measures how readily (facilment)available a service is depending of stoage class (s3 standar has 99.99% not available 53 at year)
+
+### Storage Classes
+Amazon S3 Standar -general purpose
+Standard-infrquent access
+One Zone-InAc
+Glacier Instant Retrieval
+Glacier Flexible Retrieval
+Glacier Deep Archive
+Intelligent Tiering
+Can move using lifecycle configs or manual
+
+* Standard 
+
+99.99% availability used for frequently accessed data, low latency and high throughput, big data analaytics, gaming apps, content distribution
+
+* S3 Standard IA and One Zone IA
+
+    * IA less freq accessed, lower cost than standard 99.9% availability
+    * ONE ZONE high durability 99,9 11 9's in a single AZ , data lose when AZ is destroyed 99.5% availability , used for storing secondary backup of pn-promises data or data you can recreate
+
+* S3 Glacier storage clases
+Low cost object storage meant for archiving/backup, pricing for storange an object retrieval cost
+    * S3 Glacier Instant Retrieval - ml second retrieval great for data accessed one a quarter, minimun storage 90 days
+    * S3 Glacier Flexible Retrieval - expedited 1-5 min , standard 3 to 5 hours , bulk 5- 12 hous, 90 days
+    * S3 Glacier Deep Archive - for long term storage - sandard 12 h, bulk 48 h , 180 days
+
+* S3 intelligent-tiering
+Samll monthlyy monitoring and auuto-tiering fee, moves automatically bettween Access Tiers based on usage, no retrieval charges.
+
+    * Frequent access tier (automatic) default tier
+    * Infrequent access tier (automatic) not accessed for 30 days
+    * Archive Instant access tier (automatic) not accessed 90 days
+    * Archive access tier (optional) 90 days to 700+ days
+    * Deep archive access tier (optional) 180 to 700 days
+
+* S3 object lock & glacierVault Lock
+ -Object lock adopt WORM write once read many model, block an object verion deletion for some time
+Glacier Vault Lock WORM , lock the policy for future edits, helpful for compliance and data retention
+
+* S3 Encryption
+we have 3 modes
+    * No encription 
+    * Server-side encryption (server incharge to encrypt the file) 
+    * Client-side encryption user encripts before to upload
+
+* Responsability model S3
+
+AWS - infraestructure(global security, durability, availavility), configuration and vulenarability ana, compliance validation
+
+User- versioning , bucket policies, replication setup, loggin and monitoring , storage classes, encryption
+
+### AWS Snow family 
+Higly Secure portable devices to collect and process data at the edge, and migrate data into and out of AWS
+
+Migration: snowcone, snowball edge, snowmogile
+Edge Computing: snowcone and snowball Edge
+
+* Snowball Edge
+Physical data transport solution, move TBs or PBs of data in our out AWS
+pay per data transfer job, provide  block storage 
+    * Snowball Edge Storage Optimzed - 80TB of HDD
+    * Snowball Edge Compute Optimzed - 42TB of HDD    
+Large data cloud migrations , disaster recovery
+
+* Snowcone
+Small porbale computing anywehere 2.1 kg, rugged (robusto) and secure 
+8 TB used for edge computing strage and data transfer.
+Can be sent back to AWs office or connect it to internet and use AWS dataSync
+
+* SnowMobile
+tranfer exabytes 1EB 1.000.000 TB, each snowmobile has 100 PB of capaity, high security temperature controlled GPS 24/7 video surveillance
+Better than snowball if you transfe more than 10 PB
+
+
+### AWS snow family for data migrations
+
+### Snow usage process
+Request snowball devices from AWS console for delivery.
+Intall in your server.
+Connect the snowball and copy files 
+Ship back the dice when you're done
+Data will be loaded into a S3
+Snowball is completely wiped(borrado)
+
+* Edge Computing
+Process data created on an edge location (truck road, ship on the sea, mining , underground) no internet access or no easy computing power
+if we need we can ship back the device, used to preprocess data, machine learning , transcoding.
+
+* Snow family edge computing
+    * snowcone smaller 21 CPUs 4 GB
+    * snowball edge compute optimzed -52 vCPUs 208 GiB of RAM, optional GPU,42 TB usable storage
+    * snowball edge storage optmized 40 vcpus 80 RAM object clust avaiable
+
+    All can run Ec2 lambda using AWS IoT greengrass
+    Long-term deployment options 1-3 years discounted price
+
+* AWS OpsHUB
+software to install in your laptio to manage snow family device , monitor launch AWs services, trasfering files, unlocking and configurein single or clouster dices
+
+### hybrid CLoud fo Storage
+Part of the infrestrucutre on premises and part in the cloud, due cloud migrations, security reqs, compliance reqs, it strategy
+to exposethe S3 data on premises you need AWS storage gateway
+
+* AWS storage gateway
+Bridge between on premises and data cloud on S#,
+
+--170--
