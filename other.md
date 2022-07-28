@@ -742,4 +742,335 @@ to exposethe S3 data on premises you need AWS storage gateway
 * AWS storage gateway
 Bridge between on premises and data cloud on S#,
 
+
+S3 Glacier Vault Lock allows you to easily deploy and enforce compliance controls for individual S3 Glacier vaults with a vault lock policy. You can specify controls such as “write once read many” (WORM) in a vault lock policy and lock the policy from future edits. Once locked, the policy can no longer be changed.
+
+AWS Storage Gateway is a hybrid cloud storage service that gives you on-premises access to virtually unlimited cloud storage.
+
+Snowball Edge is best-suited to move petabytes of data and offers computing capabilities. Be careful, it's recommended to use a fleet of Snowballs to move less than 10PBs of data. Over this quantity, it's better-suited to use Snowmobile.
+
+Snowmobile is used to move exabytes of data in or out of AWS (1 EB=1,000 PBs=1,000,000 TBs).
+
+Access Keys are used to sign programmatic requests to the AWS CLI or AWS API.
+
+Buckets store objects in Amazon S3.
+
+AWS Snowcone is a small, portable, rugged, and secure edge computing and data transfer device. It provides up to 8 TB of usable storage.
+
+Lifecycle Rules can be used to define when S3 objects should be transitioned to another storage class or when objects should be deleted after some time.
+
+Snowball Edge Storage Optimized devices are well suited for large-scale data migrations and recurring transfer workflows, as well as local computing with higher capacity needs.
+
+Amazon S3 Standard-Infrequent Access allow you to store infrequently accessed data, with rapid access when needed, has a high durability, and is stored in several Availability Zones to avoid data loss in case of a disaster. It can be used to store data for disaster recovery, backups, etc.
 --170--
+
+
+## Databases Intro
+
+Storigndata on disks can have its limits, sometimes you need to store in a DB etrutcturing the data build indexes to efficently query search.
+Define relationships between your datasets. relational and no relatonial DBs
+
+### DB and shared responsability on AWS
+
+AWS offers use to manage differente databases
+Benefits:quick provisioning HaAava,verti and horizonal scaling
+automated backup and  restore , operations, upgrades,OS patch handled by AWS, monitoring and alering.
+
+EC2 could be run DBs but we need to handle backup avialbility fault tolereance
+
+
+## AWS RDS overview
+
+ RDS stands for Relational Database SErvice,managed DB service for DB use SQL as query lenguage.
+
+ It allows you to create DBs in the cloud that are managed by AWS
+ (postgress,mysql,maria dB, oracle, microsfot SQL server, aurora)
+
+ Using RDS have adventages than deplyin DB on EC2
+ RDS
+
+ Automated provisioning OS patching, bakcups, monitoring dashboard ,read replicas for improved read perfomance, muli aZ setup, maintenance windows for upgrades, scaling capability, storage backed by EVS gp2 or io l, BUT you can't SSH into your instances
+
+ ### Amazon aurora
+
+ AWS property techonolgy from AWS not open source
+ Cloud optimzaed 5X perfomance improvend 5x tham mysql and 3x than postgres on RDS,postgres and mysql are both supported as Aurora DB
+ Scale automatically on 10 GB
+ Aurora vosts more than RDS 20% more but is more efficient,not free tier
+
+
+ ### deployments
+
+ * REad replicas
+create multiple replicas  to read more faster but only main can writes 
+* multy AZ 
+fialover(comutacion por error) in case of AZ outage HA, only one AZ as failover
+* multi region
+Create replicas in diferent regions but writes can be only in main region.
+local performance for blobal reads, more cost
+
+## Amazon ElasCache Overview
+
+ElasiCache get managed REdis or Memcached, caches are in-memory databaes with hig performance ,low latency.
+Caches are in-memory db with HP low latency, helps reduce load of dbs for read intensive.
+AWs in charge of OS maintenance /patching/setup/config/monitoring
+
+## Dynamo DB
+fully manage hig available with replication across 3 AZ
+NoSQL DB, distributed serveless database scaling to massive workloads
+Millions of request x sec.
+Fast and conssten in performance.
+Single digit millicend latency , low latency retrieval (recuperacion
+Integrated with IAM
+Low cost and auto scaling, standard and Infrequet access table class
+
+key value dB
+
+* DAX dynamo accelerator
+
+fully managed in memory cache for Dynamo DB , 10X perfomace improvement, microseconds of latency
+Secure, higly scalable.
+difference with ElastiCache at the CCP level , dax is only used with dynamoDB with elastiCache can be used for other DBs
+
+* DynamoDB global tables
+
+make a DynamoDB table accessible with low latency in multuple regions
+ACtive ACive replication(read and write to any AWS region).
+
+### Redshift overview
+
+redshift os based on postgresSQl but not used for OLTP online transactions processing
+Its OLAP online anayltical proccesing analytics and data warehousing
+Load data once every hour not every second
+10X bettter performance than other data warehouses scale to PBs of data
+Clumnar storage of data insted of row bassed
+Massibely Parallel query execution MPP hig avaiable
+Pay as you go based on the instances provisioned
+Has a SQL interface for performing the queries
+BI tools such AWS quicksight or tableau integrate with it
+
+### AMazon EMR
+
+EMR stands(soporte) for elastic MApreduce
+EMR helps creating hadoop clusters Big Data to analyze and process vast amount of data.
+The clusters can be made of hundred of EC2 isntances
+Also supports apache Spark, Hbase,presto
+EMR take care of all the provision
+Auto-scaling and integrated with sport instances
+USE CASES data processing machine learing, web indexing, big data
+
+### amazon Athena
+
+Severles query service to perfom analytics aagianst S3 objects
+uses standard SQL lenguage
+Support CSV , JSon ORC avro and parquet
+
+Pricing 5$ poer TB of data scanned (using comrpesed or columnar data for cost savings less scan)
+
+Use cases BI/analytics repoting VPC flow logs
+
+TIP analuze data in S3 using serveless SQL use aThena
+
+## Amazon QuickSight (rapida vision)
+
+Serverless machine learing -powered bussines intellgence service to create interactive dashboards
+Fast, automatically scalable,per session pricing.
+Use cases Bussines analytics, building visualitacion, perform ad-hoc analsis, get bussines isights
+
+Integrated with RDS,Aurora,Athena,Reshift,S3
+
+## DocumentDB
+
+is the AWS implementation for MongoDB (similar as aurora deployment)
+high available replciation 3 AZ
+
+## Amazon Neptune
+
+Fully managed graph database
+graph datases would be a social network
+HA acrooss 3 AZ with up 15 replicas
+
+## QLDB quantum ledger (libro mayor)database
+
+;edger is a book recording finacial transactions
+fully managed serverless HA rep 3aZ
+used to review history of all the changes made to your application data over time
+Inmutable system nor emove or modify
+2X3 better perfomans than common ledger blockchain frameworks, and manipulate data using SQL
+Difference with Amazon managed blockahian : no decentralization componet in accordance with finacial regulation rules
+
+### Amazon Managed Blockchain
+
+Blockchain makes to build apps wehre multiple parties can execute transactiosn without need for a trusted or central authority
+AMB is a manged service to jouin public blockchain netowrks or create your owne scalble provate network
+Compatible with the framework ethereum and fabric
+
+### DMS dtabase migration service
+
+quick and secure migrate DB to AWS , source db remains avaiable 
+Supports homogeneous migrations ox ORacle to Oracle 
+Heteregeneous migrations - microsoft SQL to Aurosa
+
+### AWS Glue
+
+Managed extraxt , transform and load ETL service
+Useful to prepare and transform data for analytics, serverless service
+Glue data catalog
+used by athena redshift  EMR 
+
+
+
+Amazon Relational Database Service (Amazon RDS) is a SQL managed service that makes it easy to set up, operate, and scale a relational database in the cloud. It is suited for OLTP workloads
+
+Amazon QLDB is a fully managed ledger database that provides a transparent, immutable, and cryptographically verifiable transaction log owned by a central trusted authority. Amazon QLDB tracks each and every application data change and maintains a complete and verifiable history of changes over time.
+
+DynamoDB is a fast and flexible non-relational database service for any scale. It can scale with no downtime, it can process millions of requests per second, and is fast and consistent in performance.
+
+Amazon Neptune is a fast, reliable, fully-managed graph database service that makes it easy to build and run applications that work with highly connected datasets. It can be used for knowledge graphs, fraud detection, recommendations engines, social networking, etc.
+
+Amazon QuickSight is a fast, cloud-powered business intelligence (BI) service that makes it easy for you to deliver insights to everyone in your organization. You can create and publish interactive dashboards.
+
+Amazon DocumentDB (with MongoDB compatibility) is a fast, calable, highly available, and fully managed document database service that supports MongoDB workloads.
+
+Amazon DynamoDB Accelerator (DAX) is a fully managed, highly available, in-memory cache for Amazon DynamoDB that delivers up to a 10 times performance improvement—from milliseconds to microseconds—even at millions of requests per second.
+
+RDS Multi-AZ deployments’ main purpose is high availability, and RDS Read replicas’ main purpose is scalability. Moreover, Multi-Region deployments’ main purpose is disaster recovery and local performance.
+
+### Other compute service
+
+Docker soft dev platform to deploy apps, apps packaged in containers that can be run on any OS, apps run the same regardless of where they're run.
+Sacle containers up and down quickly
+
+Where docker images are stored ?
+
+public docker hub or amazon ECR
+
+Docker is a sort of virtualzarion tech , resources are shared with the host , many containers on oen server.
+
+### ECS
+
+Elastic container sercie launch docker containers on AWS, you must provision and mainan the infrastucutre(EC2).
+AWS take care of starting stopping containers, integration wit app load blanacer
+
+### Fargate
+
+Launch docker cointars on AWS but don't need to provision the infrasructure, serverless offering
+
+### ECR
+
+Elastic contaringer registrey , private docker registry on AWS , they can run by ECS or fargate
+
+### serverlesss
+
+devs dibt nabage servers abynirem just deploy code , they ust deploy functions (initial server==FaaS fucntion as a service)
+Other Serverless S3, dynamoDB, fargate,lambda (pioneer)
+
+### Lambda
+
+* EC2 instance ,virtual server limted by ram COu, continuosly running,
+* lambda virtual function, limited by time (short execution), run on demand scaling automated.
+
+Benefits lambda , pricing (1 millon and 400,000 GB of compute time free), pay per request and compute time
+Integrated with whle AWs suite of service.
+Evnet Driven functiosn invoken by AWs when needed
+Integrated with manuy lenguages
+Easy monitoring on cloudwatch
+easy to get more resources per fucntion.
+
+supoors nodej pthon ruby golang. lambda cointarne image (onyl especifical images of docker)
+
+Example: upload image to S3 and Aws lambda fucntion creates a thumbnal in S3 and push the image in a DynamoDB.
+
+serverless CRON job (allows to you define a schedule to execute a action)
+cloudwatch events eventBridge trigger every 1 hour AWS lambda fucntion peform a task.
+
+0.20 per million of request
+1 $ for 600000 gb-seconds
+
+very chearo to run AWS LAmbda so is very popular
+
+
+### Amazon API gateway
+
+Server less API , fully managed service for devs to easy create monitor APIs, Serverless and scalable, supports RESTful APIs and websocket.
+Support for security , user authentication, api throttiling(limitacion).
+
+Lambda is not exposed away we need a API gatwey
+
+### AWS batch
+
+fully managed batch processing at any scale
+efficiently runs 100 000 of computing batch jobs on AWS
+batch job is a job with and start and end
+Batch will dynamically launch #c2 instances or spot isntances.
+Batch provicions the right amount of compute memory
+you sumbit or schedule batch jobs and AWS batch does the rest
+Batch jobs are defines as docker images and run on EC@
+cost optimization
+
+Lambda vs Batch
+ lambdta, time limt, limited runtimes (progaming lenguandes), limited disk storage, serverless
+ Batch no time limit, any runtime as long, rely on EBS /instance store for disk space, relies on EC2 (can be managed by aws)
+
+ ### amazon lightsail (vela ligerra)
+
+ virtual server sotrage database and networking.
+ low predctable pricing
+ simpler alternabile to using EC@, RDS, ELB,EBS, route 53
+ great for people with little cloud experience
+ can setup notificaion and monitoring of your lightsail resourseces
+ use case: simple web app, websites, dev test env
+ hig availabilit but no auto scaling , limited AWs integrations
+
+
+
+## deploying and managing Intraestructure at scale section
+
+### cloudFormation
+You can say by code what d you need
+
+infraentrucutre as code , no resourcers manually created and changes of the infraestrucure are reviewed in the code
+
+Cost , each resource within the stack is tagged with an id, you can estimate the cost with a cloudformation template
+
+Savings strategy in Dev you could autoamtion deletion of templates at 5 PM and reacreated at 8
+
+Productivity, , ability to destroy an recreate an ifra , autpomated generation of diagram, declarative programing
+
+Dont' reivent the wheel, leverage(aprovechar) the doc an the existing templates 
+
+Supoort almost all AWS reources
+
+Diagram can see all the reources and the relations between components
+
+use when we need to repet the arch in different envs , diff regions or diffs AWs accounts
+
+
+### CDK cloud development kit
+
+define your cloud infra using a familiar lenguage , the cde is comiled into cloudformation template JSON /YAML.
+
+You can thereo deploy infra and appllciation runtame code together(great for lambda and docker)
+
+### Banstalk (avichuelas magicas)
+
+developers on AWS have problems, managing the ifnra, deply code, configuing all DB and load balancers, scaling concerns.
+
+Most of the web apps have the same architecture ALB ASG
+All the debs whats is for their code to run
+
+Elastik Beanstalk is a developer centric view of deployon and application on AWS, uses all the components  we have seen before EC2 ASG ELB RDS but its all in one view that easy to make sense off and we stil lhave control over the config
+
+Beanstalk= PASS (just aware of the code)
+is free but you need to pay for the other isntances
+Managed service(instance config and os handled by beanstalk)
+Just the app code is the resp of the dev
+
+3 architectures:
+* single isntance deploy good for dev
+* LB + ASG great for prodction web apps
+* ASG only great for non web apps in production (workers)
+
+support many platforms (node go JavaSE Pythion) if not supported you can custom your platform
+
+health monitoring available (healt agent pushes metrics for cloudwatch) check app healt publishes healt eveants
