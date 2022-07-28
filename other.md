@@ -1022,6 +1022,7 @@ Lambda vs Batch
  use case: simple web app, websites, dev test env
  hig availabilit but no auto scaling , limited AWs integrations
 
+AWS Batch enables developers, scientists, and engineers to easily and efficiently run hundreds of thousands of batch computing jobs on AWS. AWS Batch dynamically provisions the optimal quantity and type of compute resources (e.g., CPU or memory-optimized instances) based on the volume and specific resource requirements of the batch jobs submitted
 
 
 ## deploying and managing Intraestructure at scale section
@@ -1074,3 +1075,5 @@ Just the app code is the resp of the dev
 support many platforms (node go JavaSE Pythion) if not supported you can custom your platform
 
 health monitoring available (healt agent pushes metrics for cloudwatch) check app healt publishes healt eveants
+
+
