@@ -1077,3 +1077,230 @@ support many platforms (node go JavaSE Pythion) if not supported you can custom 
 health monitoring available (healt agent pushes metrics for cloudwatch) check app healt publishes healt eveants
 
 
+Beanstalk more for application, cloudformation more for infraestrucyure
+
+### AWS codeDeploy
+
+We want to deploy our app automatically, intances being upgraded , servers instances must be provioned and configured ahead of time with codeploy agent
+works with EC2, works iwth on premises serves , hybrid service
+
+### code comit 
+before pushign the app code to servers it need to be stored somewhere, devs usually store code in git, competing product is CodeCommiut
+CodeCommit source control service that hosts git based repos, makes it east yo collaborate, code ghanges are automatically versioned.
+Benefits fully managed , scalable and higly available, private secured and integrate wit AWS
+
+### codeBuild
+
+code builing service in the cloud, compiles source conde, run tests, and produces packagaes that are ready to be deployed.
+Benefits fully managed, scalable , secure, pay as you go- only pay for the building time
+
+### codepipeline
+
+Orchestrate the diffente steps to have the code automatically pushed to prod (code-build0 test-provsion-deploy).
+Basis for CICD fast delivery , compatible with Code and github
+
+### codeArtifact
+
+Software packs depnde on each other build (dependecies) code dependecies , storing and retrieving these dependencies in called artifact management.
+CodeArtifact is secure scalable and costeffective artifcat management for soft devp, works with common depedency management ools such as maven , npm, yarn,pip
+Devs and codebuild can then retrieve dependecies straight forom Codeartifcat
+
+
+### CodeStar 
+
+unified UI to easly manage software development activities in one place, quick way to get started to crreclt set-up codecommit,pipeline,build, can edit the conde in the cloud using AWS Cloud9
+Quick star to devs wit CI/CD proactices
+
+### CLoud9 (AWS only)
+
+Cloud9 is a coud IDE integrated dev enviroment for wrting running and debugging code.claissic IDE like VS code, can be used in a web browser, also allows code colaboration in real-time pair programming
+
+
+### AWS SSM system manager (hybrid)
+
+helps to manage your Ec2 and on premises systems at scale.
+another Hybrid AWs secive, get operations insights about the state of your infra, suite of 10+ products more important:
+
+Patching autmation for enhaced compliance
+runc ommandas across an entire fleet of servers
+store parameter config with SSM parameter Store
+Works for both windows an linux
+
+how works? we need to isntall ssm angent on the the systems we controll, install by default in amazon AMI & some ubuntu AMI
+if a isntance cant be controlles with SSM itsproably SSM agent have an issue
+Thanks to the SSM agent we can run commands patch & configure our servers
+
+### SSM session manager(hybrid)
+
+allows to star a secure shell on your EC2 and on-premises
+No ssh access bastion hosts or ssh keys needed, no port 22 needed better security, support lunuex macOS an widnows m send session log data to S3 or cloudWatch logs
+
+### OPs Works (hybrid)
+
+Chef & puppet hel you perform server configuration autoamtically or repetitive actions, they work great with EC@ & on premises so AWS opsWorks =Managed chef & puppet (alternative to AWS SSM)
+
+
+
+## Global Aplications
+
+global app is  a app deployed n multiple geographis, on AWS could be regions and edge locations
+
+objective , decrese latenc and disaster recobery (disaster recovery plan is esencial)and attack protection
+
+Regions for deploying apps and infra, AZ made of mulple data centers, edge locations (for content delivey as close as possible to users)
+
+### Global applications in AWS
+
+
+Global DNS route 53, global content delivery network
+
+### Amazon Route 53 Overview
+
+Route 53 is a managed DNS, DNS is a collection of rules an record which helps clients understand how to reach a server through URLs.
+
+Web browser request to DNS and DNS response with the IP of the server
+
+* POlicies 
+  * simple routing policy no healt checks
+  * wighted routing policy - allow to distribute the traficc acroos to EC2
+  * latency routing policy - allow to distribute the traffic according the latency of the EC2 server(select whihc server have less latency)
+  * Failover routing policy- check the healr of the primary instance, if no distribute to the failover isntance
+
+
+  ### AWS ClodFront
+
+  Contend delivery network, improves read preformance , contenct is cached at the edge, improve user experience, DDoS protection, 216 point poresence globally
+
+
+cached memory for all the edge locations
+
+*  diffrence between cloudfront vs s3 cross region replication
+CloudFront : global Edge network , files are cached for a TTL maybe a day, grat for static cotnent that must be avialable everywehere
+S3 cross region replication: must be setup for each region ou want replcaition, filre are updated in near real-time , read only , great for dynamic contenct that need to be avaible at low altency in few regions
+
+
+### s3 transfer acceleration
+
+S3 is linked to a AWS region, to speed transfering file to an AWs edge location which will forward the data to S3 bucket in he target region
+
+### aws global accelarator 
+
+improve global ap;lication avaialbiliy an performance using AWS global network, leverage the AWs interanl netowrk to optimze the route to your ap.
+@anycast Ip are created for you app and traffic is sent through Edge locations
+
+diference global accelaerator vs CloudFront
+* bpt use Aws global netowrk and its edge locations around the world
+* bot services integrate with AWS shield for DDos protection
+
+CloudFront Content delivery network improves performace for tour cacheable content, content is served at the edge
+
+Global accelerator no caching, proxyng packets at the edge to application running in one or more AWS regions, imprves performance for a wide range of app over TCP or UDP, good for Http use cases that require static IP addresses, and requried deterministic fast regional failover
+
+
+idea is use AWS netowork to pass the info
+
+### AWS outpost
+
+hybroud cloud bussines that keep an on-premises infraestructure alongside a cloud infraestructure 
+AWS outpusts are server racks that offer the same AWS infra service api tools to build your own application on premises just as in the cloud
+Aws will setuo and manage outposts racks within your on premises infraestucture and you can start levereaging(aplancamiento, aprovechar) AWS services on-premises(you are responisble of physical security)
+
+befits - low latency, local data processing, data recidency, esasy migration from on -premises to the cloud
+fully managed service
+Some services that work on outpost(EC2 , ebs S3 EKS ECS RDS EMR)
+
+
+### AWS WaveLength
+
+Wavvelength Zones are infrestucrutre deployments amedded within telem provides datacenter at the edge of the 5G network
+Brings AWs service to the edge of the 5G netowrks(ec2 ebs vpc)
+ultra-low latency application trough 5G networks
+TRaffic doest leve the communication service providers netowrk
+
+High bandwidth and secure connection to the paren AWS Region
+no additional charges or service agreements, use cases Smart cities, ML assited diagnositc, connected vehicles, real time gaming
+
+### AWS Local Zones
+
+Place aws compute storage databese and othe selecs services closer to end users to run latency sensitive application.
+extend your VPC to more location,compatible with EC2 RDS ECS EBS ElasiCache Direct Connect.
+
+Example REgion N.Virginia us east-1 
+AWS local Zones Boston,CHicago, Dallas,Houston,Miami
+
+### Global architecture
+
+Single Region, Single AZ low difficult
+Single Region Multi AZ medium difficult
+Multi Region Acrive Passive (active passive active isntance read an write passive isntance only read) more difficult
+Multi region, ACtive Active- read latenct and write latencty difficult
+
+Amazon S3 Transfer Acceleration enables fast, easy, and secure transfers of files over long distances between your client and an S3 bucket. Transfer Acceleration takes advantage of Amazon CloudFront’s globally distributed edge locations. As the data arrives at an edge location, data is routed to Amazon S3 over an optimized network path.
+
+CloudFront uses Edge Location to cache content, and therefore bring more of your content closer to your viewers to improve read performance.
+
+AWS Outposts bring native AWS services, infrastructure, and operating models to virtually any data center, co-location space, or on-premises facility.
+
+Route 53 features are (non exhaustive list): Domain Registration, DNS, Health Checks, Routing Policy
+
+You can use AWS WAF web access control lists (web ACLs) to help minimize the effects of a distributed denial of service (DDoS) attack. For additional protection against DDoS attacks, AWS also provides AWS Shield Standard and AWS Shield Advanced.
+
+
+### Cloud intregations
+
+when we start deployin multple apps theyl will envitable need to communicate with one another
+2 pattrs of app conmnuication
+
+Syncronus communications- app to app
+Asyncronus /evnt based- app queue- app
+
+syncronus between apps can be problemati fi there are a sudden spikes of traffic, in this case better to decouple your apps
+using SQS queue model, SNS pub/sub model, kinesis real-time data streaming model 
+The services can sacale independently from our app
+
+
+### SQS 
+
+Oldes AWS offering, fully managed service (serverless) use to decouple (desacoplar)appications
+Scales from 1 message per second to 10000 per second 
+defaul retention of messages 4 days , maximun 14 days
+No limit to how many messages can be in the queue, mesages are delated after ther're read by consumers
+low latency (10 ms on publish an receive)
+
+### SNS 
+
+If you want to send one message to many receivers , event publisher only send message to one SNS topic , as many event subscriber 
+Each subsiber to the topic will get all the msgs, up to 12,500,500 subspri per topic 100, popics limit
+subscribe publish is SNS
+
+### Kinesis
+
+Kinesis = real-time big data straiming 
+managed service to collect process anda analyze real-time streaming data at any scale.
+
+Kinesis data streams low latency streaming o ingest data at scale from hundred of thousand of sources
+Kinesis data Firehose load streams into S3 redshift ElasticSearch
+Kinesis Data Analytics perform real-time analytics on streams using SQL
+Kinesis vide streams minutor real tiem video streams for analytics or ML
+
+### Amazon MQ
+
+SQS , SNS are cloud native service property protocl of AWS
+
+Traition apps running from on-premises may yse open protocols MQTT AMQP onewire
+When migratin to the cloud isntead of re-enginerin the app to use SQS and SNS we can use Amazon MQ
+
+Amazon MQ managed Apache ActiceMQ
+MQ doesnt scale as much as SQS /SNS runs on dedicated machine(not serverless, has both queue feature SQS and topic features SNS)
+
+
+
+Amazon Simple Notification Service (SNS) is a highly available, durable, secure, fully managed pub/sub messaging service that enables you to decouple microservices, distributed systems, and serverless applications. It uses a push-based system.
+
+Amazon Kinesis makes it easy to collect, process, and analyze real-time, streaming data so you can get timely insights and react quickly to new information. Kinesis offers four services: Data Firehose, Data Analytics, Data Streams, Video Streams.
+
+When using SQS or SNS, you apply the "decouple your applications” principle. This means that IT systems should be designed in a way that reduces interdependencies—a change or a failure in one component should not cascade to other components.
+
+Amazon Simple Queue Service (SQS) is a fully managed message queuing service that enables you to decouple and scale microservices, distributed systems, and serverless applications. It uses a pull-based system.
+
+--288-
