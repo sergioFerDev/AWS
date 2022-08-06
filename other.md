@@ -1304,3 +1304,199 @@ When using SQS or SNS, you apply the "decouple your applications” principle. T
 Amazon Simple Queue Service (SQS) is a fully managed message queuing service that enables you to decouple and scale microservices, distributed systems, and serverless applications. It uses a pull-based system.
 
 --288-
+
+
+## Cloud monitoring
+
+### CLoud Watch 
+
+CloudWatch provides metrics for every services in AWS,Metric is a variable to monitor (CPUUtilization, NetworkIn…)
+Alarms are used to trigger notifications for any metric, alarms actions icnrease decrease EC2 isntance, EC2 actiosn stop terminate, for billing
+
+CloudWatch Logs can collect log from: • Elastic Beanstalk: collection of logs from application • ECS: collection from containers • AWS Lambda: collection from function logs • CloudTrail based on filter • CloudWatch log agents: on EC2 machines or on-premises servers • Route53: Log DNS queries,Enables real-time monitoring of logs
+Define the time of the logs
+
+by default no logs from EC2 You need to run a CloudWatch agent on EC2 to push the log files you want
+CloudWtach can be enabled on premises
+
+CloudWatch Events:
+Actiosn to take when some event on AWS
+
+Schedule: Cron jobs (scheduled scripts)
+Event Pattern: Event rules to react to a service doing something
+Trigger Lambda functions, send SQS/SNS messages
+
+Amazon EventBridge
+
+EventBridge is the next evolution of Cloudwatch events, default event bus generetad by aws service
+by default can have a eventbus, default event bus, partner event bus or custom event bus
+inte fute CloudWatch will be remplaced with eventBridge
+
+
+### AWS CloudTrail
+Provides gocernance compliance and audit for your AWS account, enabled by default.
+get an hisory of event apic calls made wihtin your AWs accound by console SDK CLI AWS service
+
+can put logs from CloudTRail into CloudWatch logs or S3
+
+a TRail can be applied to all region or a single region
+If a resource is deleted in AWS investigate CloudTRail first
+
+3 events to check cloudtrial
+
+Management Events (operationa perfomed on reosoucrce in AWs account like config IAM attach role police  and can separate read a write -trails are config to log managemen events)
+
+Data Events by default off, S3 activity getobjet delteobject , AWS lambda fucntion execuitoin
+
+Cloudttail insight events
+
+
+CloudTrail Insights to detect unusual activity in your account like inacurate reousce proviosning, hitting service limits, gaps in peropdic maintance, analyzes normal management events to create a baseline 
+
+
+CloudTRail Events Retention
+
+Events stored for 90 days , to kee events log them to S3 and use Athena
+
+### AWS-Xray
+
+Debugign in production the good old wat, test local and log statements everywhere,redploy in prod
+loggs fromat differ across aps and log analysis is hard
+debugign one big monolith easy distributed services hard
+
+AWS-xray visual analysis of our apps or services
+
+troubleshooting performace, undestand depndencin in a miscorservice architecture,pinpoint (determinar con precision) service issues, review request behavior, dinf errors and exceptions, are we meetign SLA, wehre I am throttled, which users that are impacted
+
+### CodeGuru 
+Machine lerning poewered servie for atumated code reviews and application perfomance recommendations
+2 funcs:
+* Reviewer autoated code reviews for static code analysis (identiyf issues , security vulneabilities uses machine learning)
+hard learnend like github copilot with open repos of amazon -- support java an python--integrated with github bitbucket and AWS codecommit
+* Profiler --visibility recommndations about app performance durin runtime (production)-- undestand the runtime behavior of your app a, identify code inefficiences, improve app perfomance,decrease compute costs-- provide heap summary(which objects usign memory and anormal detection) support AWs and on premises.min overhead (gasto general)on app 
+
+
+### AWS Status -service healt dashboard
+
+all regions all service healths, histo info for each day , has RSS fedd you can subscribe too, check the status of the services provided for AWs and the history
+
+### AWS personal Health dashboard
+
+provide alers and remediation guindance when aws is experiencing events that my impact you
+While the service health dashboard displays the genral status of AWS service, personal give oyu pesonalized view int o the performance and availability of the AWs
+
+Ashow how aWS outages affect you
+
+
+CloudWatch:
+• Metrics: monitor the performance of AWS services and billing metrics
+• Alarms: automate notification, perform EC2 action, notify to SNS based on metric
+• Logs: collect log files from EC2 instances, servers, Lambda functions…
+Events (or EventBridge): react to events in AWS, or trigger a rule on a schedule
+CloudTrail: audit API calls made within your AWS account
+CloudTrail Insights: automated analysis of your CloudTrail Events
+X-Ray: trace requests made through your distributed applications
+Service Health Dashboard: status of all AWS services across all regions
+Personal Health Dashboard: AWS events that impact your infrastructure
+Amazon CodeGuru: automated code reviews and application performance recommendations
+
+
+## VPC Crash course
+
+need to know VPC subnets, intenet gateways & NAT gateways
+Security groups, network ACL NACL VPC flow logs
+Side to site VPN direct conenct
+transit gatewa 
+
+VPC cirtual pricate cloud : private netowrk to deploy your resoucers
+
+Subntes allow you to partion your netowk inside your VPC 
+A public subnet accessible from internt, private subnet not accesible form intenet
+
+To define acceso to the internet between subnets we use ROute TAbles
+
+internet gateays helps our VPC isntances conenct with internet
+Public subnets have a route to the ig
+
+NAT gateays AWS manages & Nata istances self managed allow your isntances in your private subnet access the interne while remianing private
+
+### Network aCL and security Groups
+
+NACL Network ACL
+firewall which controls traffic from and to subnet, can have allow and deny rules, are attached at the subnet level, Rules only include IP address
+
+Security Groups
+A firewall that controls traffic to and from and ENIand EC2 intance
+Can have only allow rules
+rules include IP addresses and other security groups
+
+
+Security Group -operates at the instance level, support allow rules only, is stateful return traffic is aitamically allowed regardless  any rules, evaluate rules before deciding whether to allow traffic, applies to an isntance only if someone specifies 
+
+NEtwork ACL- Operates at the subnet level , support allow and deny rules, stateless return traffic must be explicitly allowed by rules, we process rules in number order when deciding wheter to allow trafific, autoamtically applies to all instance sin the subnets
+
+
+### VPC flow logs
+
+Capture nformation about IP traffic goind into your interfaces:
+ VPC flow logs
+ Subnet flow logs
+ Elastic network interface flow logs
+
+ helo to minuto and troubleshoot conenctivity issues (sunet to internet , inter subnets)
+ caputre nework info from AWs managed interfaces too : elastic load balances, elastiCache, RDS,Aurora
+
+ VPC flow logs data can go to S3 or CloudWatch
+
+ ### VPC peering
+
+ Conenct 2 VPS privatly using AWS network , make them behave as if they were the same network , must not have overlapping IP addres range
+ Not transitive if we ahve 3 VPC each one need to have to conenction, bridge is not allowed to connect
+
+ ### VPC Endpoints
+
+ Endpoints allow you to connect to AWS services using a private netework isntad of the public WWW network
+
+ This give tou enhanced security and lower latency to acces AWS services
+
+ VPC endpoint Gateway: S3 & DynamoDB 
+ VPC endpoint interface the rest
+
+
+ ### Site to site VPN & Direct Connect
+
+ Conenct an on-premises VPN to AWS
+ The conenction is automatically encripted
+ Goes over the public internet
+
+ ### Direct Conenct DX
+
+ Establish a physical connection between on-premises and AWS
+ The connection is private secure and fast
+ Goes over a private network takes at least a month to establish
+ * Site to Site VPN
+
+On premises must use a Customer Gateway CGW
+AWS must use a Virtual Private Gateway VGW
+
+Customer gateway and virtual private gateway are needed!!!
+
+
+### Transit Gateway
+
+For having transitive peering between thousands of VPC and on-premises, hub-and-spoke(star) connection
+One single Gateway to provide this functionality
+Works with Direct Connect Gateway VPN connections
+
+one single gateway to connect all the vpcs and on premises houndred of vpcs transit gatewat
+
+
+NAT Gateways allow your instances in your private subnets to access the Internet while remaining private, and are managed by AWS.
+
+
+A network access control list (NACL) is an optional layer of security for your VPC that acts as a firewall for controlling traffic in and out of one or more subnets. They have both ALLOW and DENY rules.
+
+
+A virtual private cloud (VPC) is a virtual network dedicated to your AWS account. It is logically isolated from other virtual networks in the AWS Cloud. You can launch your AWS resources, such as Amazon EC2 instances, into your VPC.
+
+AWS Direct Connect is a cloud service solution that makes it easy to establish a dedicated private network connection from your premises to AWS.
